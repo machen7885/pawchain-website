@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { motion, useInView, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
-import { ArrowDown, ArrowRight, Check, ChevronRight, Github, Menu, ScanFace, ShieldCheck, Sparkles, X } from "lucide-react";
+import { ArrowDown, ArrowRight, Camera, Check, ChevronRight, Github, Menu, ScanFace, ShieldCheck, Sparkles, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -21,6 +21,27 @@ const stages = [
 ];
 
 const tickerItems = ["OPEN-SET IDENTITY", "FACE + NOSE SIGNAL", "HUMAN-GATED", "RAW FRAMES ≤ 24H", "VERIFY ≤ 30S"];
+
+const communityCases = [
+  {
+    id: "CASE 001",
+    title: "Portrait signal",
+    image: "/community/community-cat-portrait.jpg",
+    alt: "Orange-and-white community cat looking directly toward the camera",
+    copy: "A close, steady portrait gives the capture flow a clear view of face landmarks and nose detail—the raw material for a persistent PetID.",
+    condition: "CLOSE PORTRAIT",
+    tags: ["FACE", "NOSE", "ALIGN"],
+  },
+  {
+    id: "CASE 002",
+    title: "Everyday capture",
+    image: "/community/community-cat-home.jpg",
+    alt: "Orange-and-white community cat standing on a bed in ordinary room light",
+    copy: "Ordinary room light and natural movement reflect where PawChain needs to work: at home, on a phone, without a studio setup.",
+    condition: "HOME LIGHT",
+    tags: ["PHONE", "MULTI-FRAME", "QUALITY"],
+  },
+];
 
 function CursorAura() {
   return <div className="cursor-aura" aria-hidden="true"><i /><b /></div>;
@@ -79,18 +100,18 @@ function CatSignal() {
 
 function Header() {
   const [open, setOpen] = useState(false);
-  const nav = [["System", "#system"], ["Protocol", "#protocol"], ["Principles", "#principles"], ["Roadmap", "#roadmap"]];
+  const nav = [["System", "#system"], ["Community", "#community"], ["Protocol", "#protocol"], ["Principles", "#principles"], ["Roadmap", "#roadmap"]];
   return <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-8 md:pt-6">
     <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between rounded-full border border-white/10 bg-[#071014]/70 px-5 backdrop-blur-xl md:px-7">
       <Wordmark compact />
-      <nav className="hidden items-center gap-8 md:flex">{nav.map(([label, href]) => <a key={label} href={href} className="nav-link">{label}</a>)}</nav>
-      <div className="hidden items-center gap-2 md:flex">
+      <nav className="hidden items-center gap-6 lg:flex xl:gap-8">{nav.map(([label, href]) => <a key={label} href={href} className="nav-link">{label}</a>)}</nav>
+      <div className="hidden items-center gap-2 lg:flex">
         <Button variant="ghost" size="sm" asChild><a href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer"><Github className="h-4 w-4" /> GitHub</a></Button>
         <Button size="sm" asChild><a href="#protocol">Explore the protocol <ArrowRight className="h-3.5 w-3.5" /></a></Button>
       </div>
-      <button className="grid h-10 w-10 place-items-center rounded-full border border-white/10 md:hidden" onClick={() => setOpen(v => !v)} aria-label="Toggle menu">{open ? <X /> : <Menu />}</button>
+      <button className="grid h-10 w-10 place-items-center rounded-full border border-white/10 lg:hidden" onClick={() => setOpen(v => !v)} aria-label="Toggle menu">{open ? <X /> : <Menu />}</button>
     </div>
-    {open && <div className="mx-auto mt-2 max-w-[1440px] rounded-[1.5rem] border border-white/10 bg-[#0a151a]/95 p-4 backdrop-blur-xl md:hidden">{nav.map(([label, href]) => <a onClick={() => setOpen(false)} key={label} href={href} className="block rounded-xl px-4 py-3 text-sm text-white/70 hover:bg-white/5 hover:text-white">{label}</a>)}</div>}
+    {open && <div className="mx-auto mt-2 max-w-[1440px] rounded-[1.5rem] border border-white/10 bg-[#0a151a]/95 p-4 backdrop-blur-xl lg:hidden">{nav.map(([label, href]) => <a onClick={() => setOpen(false)} key={label} href={href} className="block rounded-xl px-4 py-3 text-sm text-white/70 hover:bg-white/5 hover:text-white">{label}</a>)}</div>}
   </header>;
 }
 
@@ -191,6 +212,49 @@ export default function App() {
         </div>
       </section>
 
+      <section id="community" className="community-section relative overflow-hidden border-y border-white/10 py-24 lg:py-32">
+        <div className="community-haze" aria-hidden="true" />
+        <div className="section-wrap relative z-10">
+          <SectionLabel index="02">EARLY COMMUNITY CASES</SectionLabel>
+          <div className="mt-14 grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+            <div>
+              <Badge><span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_10px_#88f0dc]" /> REAL-WORLD INPUT</Badge>
+              <h2 className="section-title mt-7">Real pets.<br/><span className="text-white/28">Real signals.</span></h2>
+            </div>
+            <div className="max-w-2xl lg:justify-self-end">
+              <p className="text-xl leading-relaxed text-white/62 md:text-2xl">Early community members are helping PawChain learn what capture looks like outside a lab: different distance, light, posture, and movement.</p>
+              <p className="mt-5 text-sm leading-relaxed text-white/38">These are community-submitted pilot examples, not published biometric results. They show the conditions the prototype is being designed to handle.</p>
+            </div>
+          </div>
+
+          <div className="mt-16 grid gap-5 lg:grid-cols-12 lg:items-start">
+            {communityCases.map((item, index) => <motion.article key={item.id} initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: index * .1, duration: .75, ease: [0.22, 1, 0.36, 1] }} className={cn("community-case", index === 0 ? "lg:col-span-7" : "lg:col-span-5 lg:mt-24")}>
+              <Card onPointerMove={tiltMove} onPointerLeave={tiltReset} className="case-card tilt-surface h-full overflow-hidden border-white/12 bg-[#091619]">
+                <img src={item.image} alt={item.alt} className="case-photo" loading="lazy" />
+                <div className="case-photo-shade" />
+                <div className="case-scan-line" aria-hidden="true" />
+                <div className="case-frame" aria-hidden="true"><i/><i/><i/><i/></div>
+                <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between p-5 font-mono text-[9px] tracking-[.16em] text-white/68 md:p-7">
+                  <span>{item.id} / COMMUNITY</span><span className="live-label"><i /> PILOT INPUT</span>
+                </div>
+                <div className="absolute inset-x-0 bottom-0 z-10 p-6 md:p-8">
+                  <div className="mb-5 flex flex-wrap gap-2">{item.tags.map(tag => <span key={tag} className="case-tag">{tag}</span>)}</div>
+                  <p className="font-mono text-[10px] tracking-[.16em] text-primary/75">{item.condition}</p>
+                  <h3 className="mt-3 text-4xl font-semibold tracking-[-.055em] md:text-5xl">{item.title}</h3>
+                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/58 md:text-base">{item.copy}</p>
+                </div>
+              </Card>
+            </motion.article>)}
+          </div>
+
+          <div className="community-flow mt-5 grid overflow-hidden rounded-3xl border border-white/10 bg-white/5 md:grid-cols-3">
+            <div><Camera/><span>01 / GUIDED CAPTURE</span><strong>5+ quality-gated frames</strong><p>A phone-led sequence gathers more than one lucky angle.</p></div>
+            <div><ScanFace/><span>02 / ON-DEVICE GATE</span><strong>Weak frames stay local</strong><p>Blurred or unusable frames are re-prompted before upload.</p></div>
+            <div><ShieldCheck/><span>03 / PRIVACY BOUNDARY</span><strong>Raw frames ≤ 24 hours</strong><p>The durable record is a template—not a public photo gallery.</p></div>
+          </div>
+        </div>
+      </section>
+
       <section id="protocol" className="relative bg-[#dce8e5] px-5 py-24 text-[#081516] md:px-10 lg:px-16 lg:py-32">
         <div className="absolute inset-0 protocol-grid opacity-35" />
         <div className="relative mx-auto max-w-[1440px]">
@@ -207,7 +271,7 @@ export default function App() {
       </section>
 
       <section id="principles" className="section-wrap py-24 lg:py-32">
-        <SectionLabel index="02">FOUR PRIMITIVES</SectionLabel>
+        <SectionLabel index="03">FOUR PRIMITIVES</SectionLabel>
         <div className="mt-16 grid gap-12 lg:grid-cols-[.65fr_1.35fr]"><div className="lg:sticky lg:top-32 lg:self-start"><h2 className="section-title">Remove one.<br/><span className="text-white/28">Watch it collapse.</span></h2><p className="mt-6 max-w-sm leading-relaxed text-white/45">Each layer answers one question the layer below cannot. Together, they turn recognition into accountability.</p></div>
           <div className="divide-y divide-white/10 border-y border-white/10">{principles.map((item, i) => <motion.article key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: i * .06 }} className="principle group"><div className="flex items-center gap-5"><span className="font-mono text-xs text-primary">{item.no}</span><item.icon className="h-5 w-5 text-white/30 transition-colors group-hover:text-primary"/><div><h3>{item.title}</h3><p>{item.caption}</p></div></div><p className="max-w-md text-sm leading-relaxed text-white/45">{item.body}</p><span className="font-mono text-[10px] tracking-[.14em] text-white/25">{item.meta}</span></motion.article>)}</div>
         </div>
@@ -218,7 +282,7 @@ export default function App() {
       </section>
 
       <section id="roadmap" className="section-wrap py-24 lg:py-32">
-        <SectionLabel index="03">BUILD IN PUBLIC</SectionLabel>
+        <SectionLabel index="04">BUILD IN PUBLIC</SectionLabel>
         <div className="mt-16 flex flex-col justify-between gap-10 lg:flex-row lg:items-end"><h2 className="section-title max-w-3xl">Eight weeks.<br/>One verifiable system.</h2><Button variant="outline" asChild><a href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer">Follow the evidence <Github className="h-4 w-4" /></a></Button></div>
         <div className="mt-16 overflow-x-auto pb-4"><div className="roadmap min-w-[1050px]">{["Problem framing", "Capture pipeline", "Biometric identity", "Eval harness", "Registry", "DID + credentials", "Accountability", "Demo day"].map((label, i) => <div key={label} className={cn("roadmap-item", i < 2 && "done", i === 1 && "current")}><span>0{i+1}</span><i/><strong>{label}</strong><small>{i === 0 ? "SHIPPED" : i === 1 ? "IN BUILD" : "PLANNED"}</small></div>)}</div></div>
       </section>
@@ -226,6 +290,6 @@ export default function App() {
       <section className="px-5 pb-5 md:px-8 md:pb-8"><div onPointerMove={tiltMove} onPointerLeave={tiltReset} className="cta-panel tilt-surface"><div className="tilt-glow dark"/><div className="cta-orb"/><div className="cta-sweep"/><div className="relative z-10"><Badge>OPEN PROTOTYPE</Badge><h2>Make every<br/>identity count.</h2><p>Read the decisions. Run the gates. Challenge the system.</p><div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><Button size="lg" className="bg-[#071014] text-white hover:bg-[#0c1c22]" asChild><a href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer">Explore on GitHub <ArrowRight className="h-4 w-4" /></a></Button><Button size="lg" variant="outline" className="border-[#071014]/20 text-[#071014] hover:bg-[#071014]/5" asChild><a href="#top">Back to signal</a></Button></div></div></div></section>
     </main>
 
-    <footer className="px-6 py-10 md:px-10"><div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center"><Wordmark compact/><p className="max-w-md text-xs leading-relaxed text-white/30">Prototype · single-city pilot · not deployed · not an enforcement authority</p><div className="flex items-center gap-5"><a className="footer-link" href="#system">System</a><a className="footer-link" href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer">GitHub ↗</a></div></div></footer>
+    <footer className="px-6 py-10 md:px-10"><div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center"><Wordmark compact/><p className="max-w-md text-xs leading-relaxed text-white/30">Prototype · single-city pilot · not deployed · not an enforcement authority</p><div className="flex items-center gap-5"><a className="footer-link" href="#community">Community</a><a className="footer-link" href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer">GitHub ↗</a></div></div></footer>
   </div>;
 }
