@@ -143,6 +143,7 @@ body { background: #071014; }
 .cta-sweep{position:absolute;inset:-50%;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.18) 49%,transparent 56%);transform:translateX(-45%);animation:ctaSweep 7s ease-in-out infinite}@keyframes ctaSweep{0%,35%{transform:translateX(-45%)}70%,100%{transform:translateX(45%)}}
 .cta-panel h2{font-size:clamp(4rem,9vw,9rem);font-weight:600;line-height:.78;letter-spacing:-.085em;margin-top:28px}.cta-panel p{margin-top:30px;font-size:16px;color:rgba(7,16,20,.58)}
 .footer-link{font-size:11px;color:rgba(255,255,255,.4);transition:color .2s}.footer-link:hover{color:#88f0dc}
+.wallet-message{position:absolute;right:0;top:calc(100% + 10px);display:flex;width:max-content;max-width:min(320px,80vw);align-items:center;gap:7px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(5,16,20,.96);padding:9px 11px;font:500 9px/1.45 "IBM Plex Mono",monospace;letter-spacing:.04em;color:rgba(239,255,251,.66);box-shadow:0 15px 40px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
 
 @media(min-width:720px){.principle{grid-template-columns:1fr 1.05fr 110px;align-items:center}.section-wrap{width:min(100% - 5rem,1440px)}.community-flow>div{border-right:1px solid rgba(255,255,255,.08);border-bottom:0}.community-flow>div:last-child{border-right:0}}
 @media(hover:none),(pointer:coarse){.cursor-aura{display:none}.tilt-surface{transform:none!important}.tilt-glow{display:none}}

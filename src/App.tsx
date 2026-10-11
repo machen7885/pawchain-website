@@ -4,6 +4,7 @@ import { ArrowDown, ArrowRight, Camera, Check, ChevronRight, Github, Menu, ScanF
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { WalletConnect } from "@/components/WalletConnect";
 import { cn } from "@/lib/utils";
 
 const principles = [
@@ -107,11 +108,11 @@ function Header() {
       <nav className="hidden items-center gap-6 lg:flex xl:gap-8">{nav.map(([label, href]) => <a key={label} href={href} className="nav-link">{label}</a>)}</nav>
       <div className="hidden items-center gap-2 lg:flex">
         <Button variant="ghost" size="sm" asChild><a href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer"><Github className="h-4 w-4" /> GitHub</a></Button>
-        <Button size="sm" asChild><a href="#protocol">Explore the protocol <ArrowRight className="h-3.5 w-3.5" /></a></Button>
+        <WalletConnect />
       </div>
       <button className="grid h-10 w-10 place-items-center rounded-full border border-white/10 lg:hidden" onClick={() => setOpen(v => !v)} aria-label="Toggle menu">{open ? <X /> : <Menu />}</button>
     </div>
-    {open && <div className="mx-auto mt-2 max-w-[1440px] rounded-[1.5rem] border border-white/10 bg-[#0a151a]/95 p-4 backdrop-blur-xl lg:hidden">{nav.map(([label, href]) => <a onClick={() => setOpen(false)} key={label} href={href} className="block rounded-xl px-4 py-3 text-sm text-white/70 hover:bg-white/5 hover:text-white">{label}</a>)}</div>}
+    {open && <div className="mx-auto mt-2 max-w-[1440px] rounded-[1.5rem] border border-white/10 bg-[#0a151a]/95 p-4 backdrop-blur-xl lg:hidden">{nav.map(([label, href]) => <a onClick={() => setOpen(false)} key={label} href={href} className="block rounded-xl px-4 py-3 text-sm text-white/70 hover:bg-white/5 hover:text-white">{label}</a>)}<div className="mt-3 border-t border-white/10 px-4 pt-4"><WalletConnect /></div></div>}
   </header>;
 }
 
