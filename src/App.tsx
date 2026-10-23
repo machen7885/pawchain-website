@@ -102,18 +102,18 @@ function CatSignal() {
 
 function Header() {
   const [open, setOpen] = useState(false);
-  const nav = [["System", "#system"], ["Community", "#community"], ["Protocol", "#protocol"], ["Principles", "#principles"], ["Roadmap", "#roadmap"]];
+  const nav = [["Demo", "#demo"], ["System", "#system"], ["Protocol", "#protocol"], ["Principles", "#principles"], ["Roadmap", "#roadmap"]];
   return <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-8 md:pt-6">
     <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between rounded-full border border-white/10 bg-[#071014]/70 px-5 backdrop-blur-xl md:px-7">
       <Wordmark compact />
-      <nav className="hidden items-center gap-6 lg:flex xl:gap-8">{nav.map(([label, href]) => <a key={label} href={href} className="nav-link">{label}</a>)}</nav>
+      <nav className="hidden items-center gap-6 lg:flex xl:gap-8">{nav.map(([label, href]) => <a key={label} href={href} className={label === "Demo" ? "nav-link demo-nav-link" : "nav-link"}>{label === "Demo" && <i />} {label}</a>)}</nav>
       <div className="hidden items-center gap-2 lg:flex">
         <Button variant="ghost" size="sm" asChild><a href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer"><Github className="h-4 w-4" /> GitHub</a></Button>
         <WalletConnect />
       </div>
       <button className="grid h-10 w-10 place-items-center rounded-full border border-white/10 lg:hidden" onClick={() => setOpen(v => !v)} aria-label="Toggle menu">{open ? <X /> : <Menu />}</button>
     </div>
-    {open && <div className="mx-auto mt-2 max-w-[1440px] rounded-[1.5rem] border border-white/10 bg-[#0a151a]/95 p-4 backdrop-blur-xl lg:hidden">{nav.map(([label, href]) => <a onClick={() => setOpen(false)} key={label} href={href} className="block rounded-xl px-4 py-3 text-sm text-white/70 hover:bg-white/5 hover:text-white">{label}</a>)}<div className="mt-3 border-t border-white/10 px-4 pt-4"><WalletConnect /></div></div>}
+    {open && <div className="mx-auto mt-2 max-w-[1440px] rounded-[1.5rem] border border-white/10 bg-[#0a151a]/95 p-4 backdrop-blur-xl lg:hidden">{nav.map(([label, href]) => <a onClick={() => setOpen(false)} key={label} href={href} className={label === "Demo" ? "demo-mobile-link" : "block rounded-xl px-4 py-3 text-sm text-white/70 hover:bg-white/5 hover:text-white"}>{label === "Demo" && <i />} {label}</a>)}<div className="mt-3 border-t border-white/10 px-4 pt-4"><WalletConnect /></div></div>}
   </header>;
 }
 
@@ -147,6 +147,26 @@ function Metric({ value, label, delay = 0 }: { value: string; label: string; del
 
 function SectionLabel({ children, index }: { children: string; index: string }) {
   return <div className="section-label"><span>{index}</span><div className="h-px flex-1 bg-white/10"/><em>{children}</em></div>;
+}
+
+function DemoSection() {
+  const valid = communityCases[0];
+  const invalid = communityCases[1];
+  return <section id="demo" className="demo-section relative overflow-hidden border-y border-white/10 py-24 lg:py-32">
+    <div className="demo-glow" aria-hidden="true" />
+    <div className="section-wrap relative z-10">
+      <SectionLabel index="02">CAPTURE DEMO</SectionLabel>
+      <div className="mt-14 grid gap-10 lg:grid-cols-[.82fr_1.18fr] lg:items-end">
+        <div><Badge><span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_10px_#88f0dc]" /> IMPORTANT / START HERE</Badge><h2 className="section-title mt-7">Good input<br/><span className="text-white/28">makes identity possible.</span></h2></div>
+        <div className="max-w-2xl lg:justify-self-end"><p className="text-xl leading-relaxed text-white/62 md:text-2xl">Use the valid example as your target. PawChain needs a steady, well-lit view of the face and nose before it can create a reliable PetID.</p><p className="mt-5 text-sm leading-relaxed text-white/38">Frame one animal at a time, keep both eyes and the nose visible, and hold the phone still. Blurry, dark, obstructed, or extreme-angle photos should be retaken.</p></div>
+      </div>
+      <div className="mt-16 grid gap-5 lg:grid-cols-2">
+        <Card className="demo-card valid-demo overflow-hidden border-primary/30 bg-[#091619]"><div className="demo-photo-wrap"><img src={valid.image} alt="Valid photo demonstration: cat face in focus with eyes and nose visible" className="demo-photo" /><span className="demo-status valid-status">VALID PHOTO DEMONSTRATION</span><span className="demo-corner-label">01 / ACCEPT</span></div><div className="p-6 md:p-8"><p className="font-mono text-[10px] tracking-[.16em] text-primary">WHAT GOOD LOOKS LIKE</p><h3 className="mt-3 text-3xl font-semibold tracking-[-.05em]">Valid capture</h3><ul className="mt-5 grid gap-3 text-sm leading-relaxed text-white/55"><li>• Face fills the frame and stays in focus</li><li>• Both eyes, nose, and key landmarks are visible</li><li>• Even light, natural expression, no heavy shadow</li></ul></div></Card>
+        <Card className="demo-card invalid-demo overflow-hidden border-amber-200/20 bg-[#121516]"><div className="demo-photo-wrap"><img src={invalid.image} alt="Invalid blurry photo demonstration: cat is angled downward and details are not clear" className="demo-photo invalid-demo-photo" /><span className="demo-status invalid-status">INVALID / BLURRY DEMONSTRATION</span><span className="demo-corner-label">02 / RETAKE</span></div><div className="p-6 md:p-8"><p className="font-mono text-[10px] tracking-[.16em] text-amber-200/70">WHAT TO AVOID</p><h3 className="mt-3 text-3xl font-semibold tracking-[-.05em]">Retake this frame</h3><ul className="mt-5 grid gap-3 text-sm leading-relaxed text-white/55"><li>• Motion blur or soft focus across the face</li><li>• Eyes or nose hidden by angle, shadow, or an object</li><li>• Too much distance, clutter, or more than one pet</li></ul></div></Card>
+      </div>
+      <div className="mt-5 rounded-3xl border border-primary/15 bg-primary/[.045] p-6 md:flex md:items-center md:justify-between md:gap-10 md:p-8"><div><p className="font-mono text-[10px] tracking-[.16em] text-primary">QUICK CAPTURE CHECK</p><p className="mt-3 max-w-3xl text-base leading-relaxed text-white/65">Before submitting: clean the lens, move into soft front light, bring the phone to eye level, pause for focus, and capture 5+ steady frames.</p></div><a href="#protocol" className="mt-5 inline-flex shrink-0 items-center justify-center rounded-full bg-primary px-5 py-3 text-xs font-medium text-[#071014] transition hover:bg-primary/90 md:mt-0">See the capture flow <ArrowRight className="ml-2 h-3.5 w-3.5" /></a></div>
+    </div>
+  </section>;
 }
 
 export default function App() {
@@ -214,7 +234,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="community" className="community-section relative overflow-hidden border-y border-white/10 py-24 lg:py-32">
+      <section aria-hidden="true" className="hidden">
         <div className="community-haze" aria-hidden="true" />
         <div className="section-wrap relative z-10">
           <SectionLabel index="02">EARLY COMMUNITY CASES</SectionLabel>
@@ -257,6 +277,8 @@ export default function App() {
         </div>
       </section>
 
+      <DemoSection />
+
       <section id="protocol" className="relative bg-[#dce8e5] px-5 py-24 text-[#081516] md:px-10 lg:px-16 lg:py-32">
         <div className="absolute inset-0 protocol-grid opacity-35" />
         <div className="relative mx-auto max-w-[1440px]">
@@ -292,7 +314,7 @@ export default function App() {
       <section className="px-5 pb-5 md:px-8 md:pb-8"><div onPointerMove={tiltMove} onPointerLeave={tiltReset} className="cta-panel tilt-surface"><div className="tilt-glow dark"/><div className="cta-orb"/><div className="cta-sweep"/><div className="relative z-10"><Badge>OPEN PROTOTYPE</Badge><h2>Make every<br/>identity count.</h2><p>Read the decisions. Run the gates. Challenge the system.</p><div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><Button size="lg" className="bg-[#071014] text-white hover:bg-[#0c1c22]" asChild><a href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer">Explore on GitHub <ArrowRight className="h-4 w-4" /></a></Button><Button size="lg" variant="outline" className="border-[#071014]/20 text-[#071014] hover:bg-[#071014]/5" asChild><a href="#top">Back to signal</a></Button></div></div></div></section>
     </main>
 
-    <footer className="px-6 py-10 md:px-10"><div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center"><Wordmark compact/><p className="max-w-md text-xs leading-relaxed text-white/30">Prototype · single-city pilot · not deployed · not an enforcement authority</p><div className="flex items-center gap-5"><a className="footer-link" href="#community">Community</a><a className="footer-link" href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer">GitHub ↗</a></div></div></footer>
+    <footer className="px-6 py-10 md:px-10"><div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center"><Wordmark compact/><p className="max-w-md text-xs leading-relaxed text-white/30">Prototype · single-city pilot · not deployed · not an enforcement authority</p><div className="flex items-center gap-5"><a className="footer-link" href="#demo">Demo</a><a className="footer-link" href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer">GitHub ↗</a></div></div></footer>
     <PawChainGuide />
   </div>;
 }
