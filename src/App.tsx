@@ -4,6 +4,7 @@ import { ArrowDown, ArrowRight, Camera, Check, ChevronRight, Github, Menu, ScanF
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { PawChainGuide } from "@/components/PawChainGuide";
 import { WalletConnect } from "@/components/WalletConnect";
 import { cn } from "@/lib/utils";
 
@@ -292,5 +293,6 @@ export default function App() {
     </main>
 
     <footer className="px-6 py-10 md:px-10"><div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center"><Wordmark compact/><p className="max-w-md text-xs leading-relaxed text-white/30">Prototype · single-city pilot · not deployed · not an enforcement authority</p><div className="flex items-center gap-5"><a className="footer-link" href="#community">Community</a><a className="footer-link" href="https://github.com/machen7885/pawchain" target="_blank" rel="noreferrer">GitHub ↗</a></div></div></footer>
+    <PawChainGuide />
   </div>;
 }
