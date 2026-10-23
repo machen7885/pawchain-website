@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PawChainGuide } from "@/components/PawChainGuide";
+import { PetPhotoUpload } from "@/components/PetPhotoUpload";
 import { WalletConnect } from "@/components/WalletConnect";
 import { cn } from "@/lib/utils";
 
@@ -320,7 +321,7 @@ function HomePage() {
 function DemoPage() {
   return <div className="min-h-screen overflow-hidden bg-background text-foreground selection:bg-primary/30">
     <Header />
-    <main className="pt-16"><DemoSection /></main>
+    <main className="pt-16"><DemoSection /><div className="bg-[#071014] px-5 py-20 md:px-10 lg:px-16"><div className="mx-auto max-w-[1100px]"><PetPhotoUpload /></div></div></main>
     <footer className="px-6 py-10 md:px-10"><div className="mx-auto flex max-w-[1440px] justify-between border-t border-white/10 pt-8"><a className="footer-link" href="/">← Back to PawChain</a><span className="font-mono text-[10px] tracking-[.16em] text-white/25">PAWCHAIN / CAPTURE DEMO</span></div></footer>
     <PawChainGuide />
   </div>;
