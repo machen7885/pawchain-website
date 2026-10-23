@@ -277,8 +277,6 @@ function HomePage() {
         </div>
       </section>}
 
-      <DemoSection />
-
       <section id="protocol" className="relative bg-[#dce8e5] px-5 py-24 text-[#081516] md:px-10 lg:px-16 lg:py-32">
         <div className="absolute inset-0 protocol-grid opacity-35" />
         <div className="relative mx-auto max-w-[1440px]">
