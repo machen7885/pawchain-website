@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PawChainGuide } from "@/components/PawChainGuide";
+import { PetMetadataForm } from "@/components/PetMetadataForm";
 import { PetPhotoUpload } from "@/components/PetPhotoUpload";
 import { WalletConnect } from "@/components/WalletConnect";
 import { cn } from "@/lib/utils";
@@ -319,9 +320,11 @@ function HomePage() {
 }
 
 function DemoPage() {
+  const [imageCid, setImageCid] = useState<string | undefined>();
+  const [metadataCid, setMetadataCid] = useState<string | undefined>();
   return <div className="min-h-screen overflow-hidden bg-background text-foreground selection:bg-primary/30">
     <Header />
-    <main className="pt-16"><DemoSection /><div className="bg-[#071014] px-5 py-20 md:px-10 lg:px-16"><div className="mx-auto max-w-[1100px]"><PetPhotoUpload /></div></div></main>
+    <main className="pt-16"><DemoSection /><div className="bg-[#071014] px-5 py-20 md:px-10 lg:px-16"><div className="mx-auto grid max-w-[1100px] gap-6"><PetPhotoUpload onUploaded={({ cid }) => { setImageCid(cid); setMetadataCid(undefined); }} /><PetMetadataForm imageCid={imageCid} onMetadataUploaded={({ cid }) => setMetadataCid(cid)} />{metadataCid && <div role="status" className="rounded-2xl border border-primary/20 bg-primary/[.06] px-5 py-4 text-sm text-primary">Ready for minting — pass metadata CID <span className="break-all font-mono text-xs">{metadataCid}</span> to the ERC-721 mint function.</div>}</div></div></main>
     <footer className="px-6 py-10 md:px-10"><div className="mx-auto flex max-w-[1440px] justify-between border-t border-white/10 pt-8"><a className="footer-link" href="/">← Back to PawChain</a><span className="font-mono text-[10px] tracking-[.16em] text-white/25">PAWCHAIN / CAPTURE DEMO</span></div></footer>
     <PawChainGuide />
   </div>;
